@@ -1,7 +1,8 @@
-# IsoVolume_subshell_meshing
+# IsoVolume Subshell Meshing
 Code that helps to divide a sphere of radius R, into sub-shells of equal volumes, for a given thickness of outermost sub-shell. 
 
-I understand that mesh used in a FD/FV/FE discretisation for solid diffusion simulation is constructed such that the inter-nodal distance ensure that the sub-shells all have equal volumes.
+The mesh used in a FD/FV/FE discretisation for solid diffusion
+simulation is often constructed such that the inter-nodal distance ensure that the sub-shells all have equal volumes.
 This is non-trivial to derive by hand for anything other than 2 or 3 layers,  and the complexities are described with adequate dose of comments inline.
 
 Electrochem/chemical reactions usually occur at the surface of the particle, and hence we need more mesh-points closer to the surface, and as matter moves towards the centre, we need progressively lesser points, i.e. in 1D domain, with the left representing the centre, and the right representing the surface, we need a non-uniformly spaced mesh, such that the corresponding spheres represented by the inter-nodal distance have equal volume.
