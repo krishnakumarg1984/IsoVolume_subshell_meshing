@@ -10,11 +10,11 @@
 % Teng Zhang,                   t.zhang@imperial.ac.uk
 % Created : June, 2016
 
-clear;clc; close all; format compact; format short;
+clear;clc; close all; format compact; format shortG;
 
 max_shells = 100;  % MAX. number of iso-volume shells needed. Otherwise may run forever
 %% User Inputs 
-
+commandwindow;
 R       = input('Enter overall radius of the sphere : ');  
 t_outer = input('Enter thickness of outermost shell : ');                       
 
@@ -49,18 +49,18 @@ while cum_thickness < R                                                         
 end 
 
 shell_thicknesses(shell_count+1:end) = []; % Remove the 
-
+clear t1;
 %% Adjustment of core shell to ensure we don't exceed the maximum radius (domain length)
 % Note: This will always result in inner shell's thickness being smaller
 % than that needed to maintain equal volumes, while enforcing iso-shells
 % in all other sub-shells. 
 
 if cum_thickness > R
-  shell_thicknesses(end)   = t_outer;
-  extra_thickness          = sum(shell_thicknesses) - R;
-  shell_thicknesses(1)     = shell_thicknesses(1) - extra_thickness;   % Add the extra thickness to core shell
+  shell_thicknesses(end)     = t_outer;
+  extra_thickness            = sum(shell_thicknesses) - R;
+  shell_thicknesses(1:end-1) = shell_thicknesses(1:end-1) - (extra_thickness*(shell_thicknesses(1:end-1)./sum(shell_thicknesses(1:end-1))));   % Proportionally distribute the extra thickness among the inner shells 
 end
-clear cum_thickness;
+clear cum_thickness extra_thickness thickness_update_function;;
 %% Validate iso-volume implementation 
 
 shell_radii   = cumsum(shell_thicknesses);            % Compute radii of each shell, measured from the centre of the sphere
@@ -76,7 +76,14 @@ end
 clear n
 %% Pretty-print the results as a table to the command window
 
-table([1:shell_count]',shell_radii,shell_thicknesses,shell_volumes,'VariableNames',{'Shell_Number','Radius_from_origin' 'Shell_Thickness' 'Shell_Volume'})
+% NOTE: only two decimal digits are echoed to the command line for
+% pretty-printing. Please export to ascii/binary file for more
+% precision/usgae in your application
 
-fprintf('\nMean Sub-Shell Volume : %.4f \n',mean(shell_volumes))
-fprintf('Standard Deviation    : %.4f \n',std(shell_volumes))
+solution = table([0;shell_radii],[0;shell_thicknesses],[0;shell_volumes],'RowNames',['origin';strcat('shell_',cellstr(num2str((1:shell_count)')))],'VariableNames',{'Radius_from_origin' 'Shell_Thickness' 'Shell_Volume'});
+disp(solution); clear solution;
+fprintf('\nMost Repeating Sub-Shell Volume   : %.5f',mode(shell_volumes))
+fprintf('\nMean Sub-Shell Volume             : %.5f \n',mean(shell_volumes))
+fprintf('Median Sub-Shell Volume           : %.5f \n',median(shell_volumes))
+fprintf('Standard Deviation                : %.5f \n',std(shell_volumes))
+clear ans
