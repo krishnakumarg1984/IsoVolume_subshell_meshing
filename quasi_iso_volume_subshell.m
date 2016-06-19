@@ -50,10 +50,10 @@ end
 
 shell_thicknesses(shell_count+1:end) = []; % Remove the 
 clear t1;
-%% Adjustment of core shell to ensure we don't exceed the maximum radius (domain length)
-% Note: This will always result in inner shell's thickness being smaller
-% than that needed to maintain equal volumes, while enforcing iso-shells
-% in all other sub-shells. 
+%% Adjustment of all inner shells to ensure we don't exceed the maximum radius (domain length)
+% A quasi-iso volume approach is being adopted here, in order to enforce that outermost
+% shell thickness is exactly that specified by user, and exactly covers the sphere's radius.
+% The thickness of all inner shells are reduced in proportion to their computed values from above.
 
 if cum_thickness > R
   shell_thicknesses(end)     = t_outer;
