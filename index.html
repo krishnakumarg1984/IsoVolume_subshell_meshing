@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Isovolume subshell meshing by krishnakumarg1984</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Isovolume subshell meshing</h1>
+      <h2 class="project-tagline">Code that helps to divide a sphere of radius R, into sub-shells of equal volumes, for a given thickness of outermost sub-shell. </h2>
+      <a href="https://github.com/krishnakumarg1984/IsoVolume_subshell_meshing" class="btn">View on GitHub</a>
+      <a href="https://github.com/krishnakumarg1984/IsoVolume_subshell_meshing/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/krishnakumarg1984/IsoVolume_subshell_meshing/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h3>
+<a id="background" class="anchor" href="#background" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Background.</h3>
+
+<p>The mesh used in a FD/FE discretisation for solid diffusion simulation is often constructed such that the inter-nodal distance ensure that the sub-shells all have equal volumes. This is non-trivial to derive by hand for anything more than 2 or 3 layers. This code performs this automation for you and the complexities are described with a generous dose of inline comments.</p>
+
+<h3>
+<a id="motivation-and-typical-application" class="anchor" href="#motivation-and-typical-application" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation and typical application</h3>
+
+<p>Electrochemical reactions usually occur at the surface of the particle, usually modelled as a sphere of fixed radius. For improving simulation accuracy, we need more mesh-points closer to the surface of the sphere. As matter moves towards the sphere's centre, we only need to use lesser and lesser points progressively. In 1D domain, with the left representing the centre, and the right representing the surface, we need a non-uniformly spaced mesh, such that the corresponding spheres represented by the inter-nodal distance have equal volume. </p>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>As an end-user, you input the sphere radius, the max allowed shells and the desired inter-nodal distance at the surface, (i.e. the smallest mesh-size) and the code generates all the mesh co-ordinates. It also gives you the inter-nodal distances (just in case you wish to use them in your further calculations).</p>
+
+<h3>
+<a id="authors-and-attribution" class="anchor" href="#authors-and-attribution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Attribution</h3>
+
+<p>You can contact the author, Krishnakumar Gopalakrishnan here in Github <a href="https://github.com/krishnakumarg1984" class="user-mention">@krishnakumarg1984</a>. You may also send an email to <a href="mailto:krishnakumar@imperial.ac.uk">krishnakumar@imperial.ac.uk</a>  a GitHub username to generate a link to their profile. The co-author, Teng Zhang can be contacted by emailing him at <a href="mailto:t.zhang@imperial.ac.uk">t.zhang@imperial.ac.uk</a> . Attribution is not mandatory, but appreciated. However, if you are redistributing the code/modifying it in any way, please follow the instructions in license.txt file in the code repository. The code is distributed under a permissive BSD license.  However, the authors retain the copyright. </p>
+
+<h3>
+<a id="alternative-sources" class="anchor" href="#alternative-sources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Alternative Sources</h3>
+
+<p>This code may also be downloaded from MATLAB's file exchange [submission] here(<a href="http://www.mathworks.com/matlabcentral/fileexchange/57794-isovolume-subshells">http://www.mathworks.com/matlabcentral/fileexchange/57794-isovolume-subshells</a>). The MATLAB submission is synced overnight with the latest updates from the github project here.</p>
+
+<h3>
+<a id="research-group" class="anchor" href="#research-group" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Research Group</h3>
+
+<p>This code snippet is a small utility published out of the Li-ion modelling research at the Electrochemical Science and Engineering Group,Imperial College London. (<a href="http://www.imperial.ac.uk/electrochem-sci-eng">http://www.imperial.ac.uk/electrochem-sci-eng</a>)</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/krishnakumarg1984/IsoVolume_subshell_meshing">Isovolume subshell meshing</a> is maintained by <a href="https://github.com/krishnakumarg1984">krishnakumarg1984</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
