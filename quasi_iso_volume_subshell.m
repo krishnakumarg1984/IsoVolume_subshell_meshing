@@ -22,7 +22,7 @@ t_outer     = input('Enter thickness of outermost shell : ');
 
 N           = round(1/(1-((R-t_outer)/R)^3));                    % A quick formula to compute the total no. of shells
 if N > max_shells
-    fprintf('\nExceeded max. shells! \nReduce outer thickness or increase max_shells\n');
+    fprintf('\nExceeded max. shells! \nIncrease outer thickness or max shells allowed.\n');
     input('Press any key to Quit .......');
     return ;
 end
