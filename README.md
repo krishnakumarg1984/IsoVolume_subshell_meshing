@@ -12,3 +12,5 @@ As an end-user, you input the sphere radius, and the inter-nodal distance at the
 The code uses only the base MATLAB functions and hence should be compatible with GNU Octave, for those without a MATLAB license.
 
 Please do note the licensing terms, when redistributing the code.
+
+The webpage of the project is located at (https://krishnakumarg1984.github.io/IsoVolume_subshell_meshing/). The project is also synced with the MATLAB file exchange community here, http://www.mathworks.com/matlabcentral/fileexchange/57794-isovolume-subshells)
