@@ -5,50 +5,45 @@
 % Copyright 2016 Krishnakumar Gopalakrishnan & Teng Zhang, Imperial College London
 % $Revision: 1.00 $
 % Author Info
- 
+
 % Krishnakumar Gopalakrishnan,  krishnak@vt.edu
 % Teng Zhang,                   t.zhang@imperial.ac.uk
-% Created : June, 2016
+% Created : June 17, 2016
+% Updated : June 21, 2016
 
 clear;clc; close all; format compact; format shortG;
 
-max_shells = 100;  % MAX. number of iso-volume shells needed. Otherwise may run forever
 %% User Inputs 
 commandwindow;
-R       = input('Enter overall radius of the sphere : ');  
-t_outer = input('Enter thickness of outermost shell : ');                       
+R           = input('Enter overall radius of the sphere : ');  
+max_shells  = input('Enter maximum no. of shells needed : ');    % MAX. number of iso-volume shells needed. Otherwise may run forever
+t_outer     = input('Enter thickness of outermost shell : '); 
+N           = round(1/(1-((R-t_outer)/R)^3));                    % A quick formula to compute the total no. of shells
 
+if N > max_shells
+    fprintf('\nExceeded max. shells! \nReduce outer thickness or increase max_shells\n');
+    input('Press any key to Quit .......');
+    return ;
+end
 %% Compute Radius of the core (innermost shell)
 
-t1      = (R^3 - (R-t_outer)^3)^(1/3);          % Calculate innermost thickness, i.e. core radius
+t1      = (R^3 - (R-t_outer)^3)^(1/3); % Calculate innermost thickness, i.e. core radius
 
 %% Initialisations 
-shell_thicknesses   = t1*ones(max_shells,1);    % This column vector holds the computed thicknesses of each shell. Initialised to t1, i.e. core radius.  Preallocating this for speed.
-cum_thickness       = t1;                       % Cumulative thickness, measured from the core outwards. Initialised to t1, i.e. core radius
 
+shell_thicknesses   = t1*ones(N,1);    % This column vector holds the computed thicknesses of each shell. Initialised to t1, i.e. core radius.  Preallocating this for speed.
+cum_thickness       = t1;              % Cumulative thickness, measured from the core outwards. Initialised to t1, i.e. core radius
+clear N;
 %% Main loop, computing thickness of each shell, starting from the centre and radiating outwards
 
 shell_count = 1;    % Shell count = 1, before loop begins (as 1st shell thickness has been computed earlier)
 
 while cum_thickness < R                                                                     % run loop until cumulative thickness exceeds or equals sphere's total radius
-    if shell_count >= max_shells
-        disp('Exceeded max. shells. Reduce outer thickness or increase max_shells ....');
-        choice = input('Press "y" to continue with the computation, any other key to quit ....','s');
-            if choice == 'y'
-                clear choice;
-                break;
-            else
-                clear choice;
-                return ;                
-            end
-    end
     shell_count                      = shell_count + 1;                                      % Need to compute thickness of 2nd shell onwards, in the loop
     thickness_update_function        = @(t) (cum_thickness + t)^3 - cum_thickness^3 - t1^3;  % Function to compute the next shell size
     shell_thicknesses(shell_count)   = fzero(thickness_update_function,t1);                  % Append the shell_sizes vector with the newly computed shell thickness
     cum_thickness                    = cum_thickness + shell_thicknesses(shell_count);       % Update the cumulative thickness to add the current calculated thickness
 end 
-
-shell_thicknesses(shell_count+1:end) = []; % Remove the 
 clear t1;
 %% Adjustment of all inner shells to ensure we don't exceed the maximum radius (domain length)
 % A quasi-iso volume approach is being adopted here, in order to enforce that outermost
